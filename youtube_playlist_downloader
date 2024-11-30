@@ -1,0 +1,12 @@
+# youtube_playlist_downloader.py
+
+from pytube import Playlist
+
+def download_playlist(playlist_url, audio_only=False):
+    playlist = Playlist(playlist_url)
+    for video in playlist.videos:
+        stream = video.streams.filter(only_audio=audio_only).first() if audio_only else video.streams.get_highest_resolution()
+        stream.download()
+
+# Sample usage
+download_playlist("https://www.youtube.com/playlist?list=PL123")
